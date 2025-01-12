@@ -9,6 +9,10 @@ ln -sr /etc/containers/systemd/*.container /usr/lib/bootc/bound-images.d/
 
 dnf install -y cockpit cockpit-machines cockpit-podman cockpit-files unzip
 
+# Docker install: https://docs.docker.com/engine/install/centos/#install-using-the-repository
+dnf config-manager addrepo --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo
+dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
 # Cosmos
 curl -L $(curl -s https://api.github.com/repos/azukaar/Cosmos-Server/releases/latest | \
     sed 's/[()",{}]/ /g; s/ /\n/g' | grep "https.*releases/download.*amd64.zip$") \
@@ -18,15 +22,11 @@ unzip /tmp/cosmos-server.zip -d /tmp
 mv /tmp/cosmos-cloud-*/* /usr/lib/cosmos-cloud
 /usr/lib/cosmos-cloud/cosmos service install || true
 
-# Incus UI
-curl -Lo /tmp/incus-ui-canonical.deb \
-     https://pkgs.zabbly.com/incus/stable/pool/main/i/incus/"$(curl https://pkgs.zabbly.com/incus/stable/pool/main/i/incus/ | grep -E incus-ui-canonical | cut -d '"' -f 2 | sort -r | head -1)"
-ar -x --output=/tmp /tmp/incus-ui-canonical.deb
-tar --zstd -xvf /tmp/data.tar.zst
-mv /opt/incus /usr/lib/
-sed -i 's@\[Service\]@\[Service\]\nEnvironment=INCUS_UI=/usr/lib/incus/ui/@g' /usr/lib/systemd/system/incus.service
+# Fix group IDs
+groupmod -g 250 docker
 
 # Services
 
 systemctl enable cockpit.socket
 systemctl disable CosmosCloud.service
+systemctl enable docker.service
