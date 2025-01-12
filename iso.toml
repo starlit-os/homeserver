@@ -6,7 +6,11 @@ bootc switch --mutate-in-place --transport registry ghcr.io/starlit-os/homeserve
 """
 
 [customizations.installer.modules]
-enable = ["org.fedoraproject.Anaconda.Modules.Storage"]
+enable = [
+    "org.fedoraproject.Anaconda.Modules.Storage",
+    "org.fedoraproject.Anaconda.Modules.Localization",
+    "org.fedoraproject.Anaconda.Modules.Timezone",
+]
 disable = [
     "org.fedoraproject.Anaconda.Modules.Security",
     "org.fedoraproject.Anaconda.Modules.Services",
