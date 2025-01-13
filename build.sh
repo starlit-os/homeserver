@@ -25,3 +25,6 @@ groupmod -g 250 docker
 
 systemctl enable cockpit.socket
 systemctl enable docker.service
+
+# switch to server profile to allow cockpit by default
+cp -a /etc/firewalld/firewalld-server.conf /etc/firewalld/firewalld.conf
