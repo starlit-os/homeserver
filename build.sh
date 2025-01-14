@@ -16,7 +16,7 @@ curl -L $(curl -s https://api.github.com/repos/azukaar/Cosmos-Server/releases/la
     -o /tmp/cosmos-server.zip
 mkdir /usr/lib/cosmos-cloud
 unzip /tmp/cosmos-server.zip -d /tmp
-mv /tmp/cosmos-cloud-*/* /usr/lib/cosmos-cloud
+mv /tmp/cosmos-cloud-*/* /var/lib/cosmos-cloud
 
 # Fix group IDs
 groupmod -g 250 docker
