@@ -10,6 +10,20 @@ dnf install -y cockpit cockpit-machines cockpit-podman cockpit-files cockpit-sel
 dnf config-manager addrepo --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo
 dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
+dnf install -y \
+    edk2-ovmf \
+    genisoimage \
+    incus \
+    incus-agent \
+    incus-client \
+    qemu-char-spice \
+    qemu-device-display-virtio-vga \
+    qemu-device-display-virtio-gpu \
+    qemu-device-usb-redirect \
+    qemu-img \
+    qemu-kvm-core \
+    swtpm
+
 # Cosmos
 curl -L $(curl -s https://api.github.com/repos/azukaar/Cosmos-Server/releases/latest | \
     sed 's/[()",{}]/ /g; s/ /\n/g' | grep "https.*releases/download.*amd64.zip$") \
@@ -20,6 +34,9 @@ mv /tmp/cosmos-cloud-*/* /var/lib/cosmos-cloud
 
 # Fix group IDs
 groupmod -g 250 docker
+groupmod -g 251 incus-admin
+groupmod -g 252 incus
+
 
 # Services
 
