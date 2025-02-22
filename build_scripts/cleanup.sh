@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
-set -xeuo pipefail
-
-# Image cleanup
+set -euox pipefail
 
 # Image-layer cleanup
 shopt -s extglob
@@ -14,8 +12,10 @@ rm -rf /var/cache/!(rpm-ostree)
 mkdir -p /var/tmp
 # Remove gitkeep file if that still is on / for any reason
 rm -f /.gitkeep
-dnf clean all
 
-# FIXME: bootc container lint --fix will replace this
+dnf clean all
 ostree container commit
+
+ls /var/log
+
 bootc container lint

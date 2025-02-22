@@ -4,15 +4,16 @@ set -xeuo pipefail
 
 # This is a bucket list. We want to not have anything in this file at all.
 
-# Enable the same compose repos during our build that the centos-bootc image
-# uses during its build.  This avoids downgrading packages in the image that
-# have strict NVR requirements.
-curl --retry 3 -Lo "/etc/yum.repos.d/compose.repo" "https://gitlab.com/redhat/centos-stream/containers/bootc/-/raw/c${MAJOR_VERSION_NUMBER}s/cs.repo"
-sed -i \
-  -e "s@- (BaseOS|AppStream)@& - Compose@" \
-  -e "s@\(baseos\|appstream\)@&-compose@" \
-  /etc/yum.repos.d/compose.repo
+# enable systemd-resolved for proper name resolution
+systemctl enable systemd-resolved.service
 
-# Copy ucore workaround services
-cp /tmp/ucore/systemd/system/libvirt-workaround.service /usr/lib/systemd/system/
-cp /tmp/ucore/tmpfiles/libvirt-workaround.conf /usr/lib/tmpfiles.d/
+# Copy ucore workaround services and enable them
+cp /tmp/ucore/systemd/system/{libvirt,swtpm}-workaround.service /usr/lib/systemd/system/
+cp /tmp/ucore/tmpfiles/{libvirt,swtpm}-workaround.conf /usr/lib/tmpfiles.d/
+cp /tmp/ucore/systemd/system/ucore-paths-provision.service /usr/lib/systemd/system/
+cp /tmp/ucore/etc/systemd/ucore-paths-provision.conf /etc/systemd/
+cp /tmp/ucore/sbin/ucore-paths-provision.sh /usr/sbin/
+
+systemctl enable libvirt-workaround.service
+systemctl enable swtpm-workaround.service
+systemctl enable ucore-paths-provision.service
