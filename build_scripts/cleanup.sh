@@ -16,6 +16,6 @@ rm -f /.gitkeep
 dnf clean all
 ostree container commit
 
-ls /var/log
+rm -rf /var/log/dnf5.log
 
 bootc container lint
