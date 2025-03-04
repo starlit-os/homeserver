@@ -10,7 +10,6 @@ systemctl enable docker.service
 systemctl enable docker.socket
 
 systemctl disable rpm-ostree-countme.timer
-systemctl disable systemd-remount-fs.service
 
 # Don't automatically restart when autoupdating.
 sed -i 's/ --apply//' /usr/lib/systemd/system/bootc-fetch-apply-updates.service

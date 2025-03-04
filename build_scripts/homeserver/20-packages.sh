@@ -5,6 +5,9 @@ set -ouex pipefail
 # Packages
 dnf install -y avahi cockpit cockpit-machines cockpit-podman cockpit-files libvirt firewalld
 
+# CLI stuff
+dnf install -y fish
+
 # Docker install: https://docs.docker.com/engine/install/centos/#install-using-the-repository
 dnf config-manager addrepo --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo
 dnf install -y docker-ce docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
