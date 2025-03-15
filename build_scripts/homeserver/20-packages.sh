@@ -3,7 +3,7 @@
 set -ouex pipefail
 
 # Packages
-dnf install -y avahi cockpit cockpit-machines cockpit-podman cockpit-files libvirt firewalld
+dnf install -y avahi cockpit cockpit-machines cockpit-podman cockpit-files cockpit-selinux libvirt firewalld
 
 # CLI stuff
 dnf install -y fish
