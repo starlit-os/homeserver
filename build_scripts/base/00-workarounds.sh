@@ -15,5 +15,6 @@ cp /tmp/ucore/etc/systemd/ucore-paths-provision.conf /etc/systemd/
 cp /tmp/ucore/sbin/ucore-paths-provision.sh /usr/sbin/
 
 systemctl enable libvirt-workaround.service
-systemctl enable swtpm-workaround.service
+# FIXME: Disabled for now, reenable when fixed or remove if not needed
+# systemctl enable swtpm-workaround.service
 systemctl enable ucore-paths-provision.service
