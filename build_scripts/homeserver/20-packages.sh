@@ -2,18 +2,49 @@
 
 set -ouex pipefail
 
-# Packages
-dnf install -y avahi cockpit cockpit-machines cockpit-podman cockpit-files cockpit-selinux libvirt firewalld
+PACKAGES=(
+    cockpit
+    cockpit-machines
+    cockpit-podman
+    cockpit-files
+    cockpit-selinux
+    libvirt
+)
 
-# CLI stuff
-dnf install -y fish
-
-# Docker install: https://docs.docker.com/engine/install/centos/#install-using-the-repository
+# Docker Packages
 dnf config-manager addrepo --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo
-dnf install -y docker-ce docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+PACKAGES+=(
+    containerd.io
+    docker-buildx-plugin
+    docker-ce
+    docker-ce-cli
+    docker-compose-plugin
+)
 
-# Tailscale
+# Tailscale Packages
 dnf config-manager addrepo --from-repofile=https://pkgs.tailscale.com/stable/fedora/tailscale.repo
+PACKAGES+=(
+    tailscale
+)
+
+# Incus Packages
+PACKAGES+=(
+    edk2-ovmf
+    genisoimage
+    incus
+    incus-agent
+    incus-client
+    qemu-char-spice
+    qemu-device-display-virtio-vga
+    qemu-device-display-virtio-gpu
+    qemu-device-usb-redirect
+    qemu-img
+    qemu-kvm-core
+    swtpm
+)
+
+dnf -y install "${PACKAGES[@]}"
+
+# Disable repos
 dnf config-manager setopt tailscale-stable.enabled=0
-dnf -y --enablerepo tailscale-stable install \
-  tailscale
+dnf config-manager setopt docker-ce-stable.enabled=0

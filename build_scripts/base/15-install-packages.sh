@@ -9,34 +9,41 @@ dnf versionlock add kernel kernel-devel kernel-devel-matched kernel-core kernel-
 dnf -y update
 
 # Install ublue-os stuff
-dnf install -y \
-    /tmp/rpms/config/ublue-os-{luks,udev-rules}.noarch.rpm
+# dnf install -y \
+#     /tmp/rpms/config/ublue-os-{luks,udev-rules}.noarch.rpm
 
 # add some packages present in Fedora CoreOS but not CentOS bootc
-dnf -y install --setopt=install_weak_deps=False \
-  afterburn \
-  afterburn-dracut \
-  audit \
-  authselect \
-  clevis-dracut \
-  clevis-pin-tpm2 \
-  coreos-installer \
-  coreos-installer-bootinfra \
-  firewalld \
-  git-core \
-  hwdata \
-  ignition \
-  ipcalc \
-  iscsi-initiator-utils \
-  nfs-utils-coreos \
-  rsync \
-  runc \
-  ssh-key-dir \
-  wireguard-tools
-# TODO: Add these if/when available
-# NetworkManager-team \
+PACKAGES=(
+    afterburn
+    afterburn-dracut
+    audit
+    authselect
+    clevis-dracut
+    clevis-pin-tpm2
+    coreos-installer
+    coreos-installer-bootinfra
+    firewalld
+    git-core
+    hwdata
+    ignition
+    ipcalc
+    iscsi-initiator-utils
+    nfs-utils-coreos
+    rsync
+    runc
+    ssh-key-dir
+    wireguard-tools
+)
 
 # Install some additional useful packages
-dnf -y install \
-  usbutils \
-  pciutils
+PACKAGES+=(
+    usbutils
+    pciutils
+)
+
+# Install ublue-os stuff
+PACKAGES+=(
+    /tmp/rpms/config/ublue-os-{luks,udev-rules}.noarch.rpm
+)
+
+dnf -y install --setopt=install_weak_deps=False "${PACKAGES[@]}"
