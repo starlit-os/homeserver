@@ -8,6 +8,9 @@ systemctl enable cockpit.socket
 systemctl enable tailscaled.service
 systemctl enable docker.service
 systemctl enable docker.socket
+systemctl enable incus.socket
+systemctl enable incus.service
+systemctl enable incus-startup
 
 systemctl disable rpm-ostree-countme.timer
 
