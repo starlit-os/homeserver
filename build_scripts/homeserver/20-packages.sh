@@ -28,6 +28,7 @@ PACKAGES+=(
 )
 
 # Incus Packages
+dnf copr enable -y ganto/lxc4
 PACKAGES+=(
     edk2-ovmf
     genisoimage
