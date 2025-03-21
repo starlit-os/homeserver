@@ -29,6 +29,7 @@ PACKAGES+=(
 
 # Incus Packages
 dnf copr enable -y ganto/lxc4
+dnf copr enable -y ganto/umoci
 PACKAGES+=(
     edk2-ovmf
     genisoimage
@@ -41,6 +42,7 @@ PACKAGES+=(
     qemu-device-usb-redirect
     qemu-img
     qemu-kvm-core
+    umoci
     swtpm
 )
 
@@ -49,3 +51,5 @@ dnf -y install "${PACKAGES[@]}"
 # Disable repos
 dnf config-manager setopt tailscale-stable.enabled=0
 dnf config-manager setopt docker-ce-stable.enabled=0
+dnf copr disable ganto/umoci
+dnf copr disable ganto/lxc4
