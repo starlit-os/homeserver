@@ -6,6 +6,8 @@ on:
       - main
   schedule:
     - cron: "05 10 * * *" # 10:05am UTC everyday
+      branches:
+      - main
   merge_group:
   push:
     branches:
@@ -19,7 +21,7 @@ env:
   IMAGE_DESC: "CentOS Stream-based Homeserver-focused image"
   IMAGE_REGISTRY: "ghcr.io/${{ github.repository_owner }}"
   DEFAULT_TAG: "latest"
-  CENTOS_VERSION: "41"
+  CENTOS_VERSION: "42"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
