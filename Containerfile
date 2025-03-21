@@ -1,4 +1,4 @@
-ARG MAJOR_VERSION="${MAJOR_VERSION:-41}"
+ARG MAJOR_VERSION="${MAJOR_VERSION:-42}"
 
 FROM ghcr.io/ublue-os/config:latest AS config
 FROM ghcr.io/ublue-os/ucore:stable AS ucore
