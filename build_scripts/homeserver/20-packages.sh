@@ -12,14 +12,14 @@ PACKAGES=(
 )
 
 # Docker Packages
-dnf config-manager addrepo --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo
-PACKAGES+=(
-    containerd.io
-    docker-buildx-plugin
-    docker-ce
-    docker-ce-cli
-    docker-compose-plugin
-)
+# dnf config-manager addrepo --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo
+# PACKAGES+=(
+#     containerd.io
+#     docker-buildx-plugin
+#     docker-ce
+#     docker-ce-cli
+#     docker-compose-plugin
+# )
 
 # Tailscale Packages
 dnf config-manager addrepo --from-repofile=https://pkgs.tailscale.com/stable/fedora/tailscale.repo
@@ -62,6 +62,6 @@ dnf -y install "${PACKAGES[@]}"
 
 # Disable repos
 dnf config-manager setopt tailscale-stable.enabled=0
-dnf config-manager setopt docker-ce-stable.enabled=0
+#dnf config-manager setopt docker-ce-stable.enabled=0
 dnf copr disable ganto/umoci
 dnf copr disable ganto/lxc4
