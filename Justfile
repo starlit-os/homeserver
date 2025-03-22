@@ -1,7 +1,7 @@
 export repo_organization := env("GITHUB_REPOSITORY_OWNER", "starlit-os")
 export image_name := env("IMAGE_NAME", "homeserver")
 export centos_version := env("CENTOS_VERSION", "42")
-export default_tag := env("DEFAULT_TAG", "latest")
+export default_tag := env("DEFAULT_TAG", "latest-42")
 
 # work around issue with upstream image builder,
 # should converge back on upstream (quay.io/centos-bootc/bootc-image-builder:latest)
