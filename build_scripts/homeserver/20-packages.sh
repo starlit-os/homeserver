@@ -50,6 +50,9 @@ PACKAGES+=(
 PACKAGES+=(
     eza
     fish
+    tealdeer
+    bat
+    fd
 )
 
 dnf -y install "${PACKAGES[@]}"
