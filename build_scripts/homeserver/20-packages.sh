@@ -46,6 +46,12 @@ PACKAGES+=(
     swtpm
 )
 
+# CLI utilities
+PACKAGES+=(
+    eza
+    fish
+)
+
 dnf -y install "${PACKAGES[@]}"
 
 # Disable repos
