@@ -53,7 +53,9 @@ PACKAGES+=(
     fd
     fish
     gh
+    micro
     tealdeer
+    zoxide
 )
 
 dnf -y install "${PACKAGES[@]}"
