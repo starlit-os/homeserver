@@ -48,11 +48,12 @@ PACKAGES+=(
 
 # CLI utilities
 PACKAGES+=(
-    eza
-    fish
-    tealdeer
     bat
+    eza
     fd
+    fish
+    gh
+    tealdeer
 )
 
 dnf -y install "${PACKAGES[@]}"
