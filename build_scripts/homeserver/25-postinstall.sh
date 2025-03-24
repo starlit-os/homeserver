@@ -8,7 +8,7 @@ groupmod -g 251 incus
 groupmod -g 252 incus-admin
 
 # Manually install chezmoi
-pushd /usr/bin
+pushd /usr
 sh -c "$(curl -fsLS get.chezmoi.io)"
 popd
 
