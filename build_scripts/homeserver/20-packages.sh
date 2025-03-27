@@ -47,16 +47,16 @@ PACKAGES+=(
 )
 
 # CLI utilities
-PACKAGES+=(
-    bat
-    eza
-    fd
-    fish
-    gh
-    micro
-    tealdeer
-    zoxide
-)
+# PACKAGES+=(
+#     bat
+#     eza
+#     fd
+#     fish
+#     gh
+#     micro
+#     tealdeer
+#     zoxide
+# )
 
 dnf -y install "${PACKAGES[@]}"
 
