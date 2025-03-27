@@ -4,8 +4,8 @@ set -ouex pipefail
 
 PACKAGES=(
     cockpit
-    cockpit-machines
-    cockpit-podman
+    #cockpit-machines
+    #cockpit-podman
     cockpit-files
     cockpit-selinux
     libvirt
