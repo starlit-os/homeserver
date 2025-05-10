@@ -76,7 +76,7 @@ jobs:
             org.opencontainers.image.description=${{ env.IMAGE_DESC }}
             org.opencontainers.image.documentation=https://raw.githubusercontent.com/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}/refs/heads/main/README.md
             org.opencontainers.image.source=https://github.com/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}/blob/main/build.sh
-            org.opencontainers.image.title=${{ env.IMAGE_NAME }}-dx
+            org.opencontainers.image.title=${{ env.IMAGE_NAME }}
             org.opencontainers.image.url=https://github.com/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
             org.opencontainers.image.vendor=${{ github.repository_owner }}
             org.opencontainers.image.version=latest
@@ -96,7 +96,7 @@ jobs:
         id: build-image
         shell: bash
         env:
-          IMAGE_NAME: ${{ env.IMAGE_NAME }}-dx
+          IMAGE_NAME: ${{ env.IMAGE_NAME }}
           EXTRA_TAGS: ${{ steps.metadata.outputs.tags }}
         run: |
           set -x
@@ -126,7 +126,7 @@ jobs:
         id: image_case
         uses: ASzc/change-string-case-action@d0603cd0a7dd490be678164909f65c7737470a7f # v6
         with:
-          string: ${{ env.IMAGE_NAME }}-dx
+          string: ${{ env.IMAGE_NAME }}
 
       - name: Push To GHCR
         uses: redhat-actions/push-to-registry@5ed88d269cf581ea9ef6dd6806d01562096bee9c # v2
