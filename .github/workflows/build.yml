@@ -1,0 +1,57 @@
+---
+name: Build Image
+on:
+  pull_request:
+    branches:
+      - main
+  schedule:
+    - cron: "05 10 * * *" # 10:05am UTC everyday
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "**/README.md"
+  workflow_dispatch:
+
+env:
+  IMAGE_NAME: "homeserver"
+  IMAGE_DESC: "Fedora-based Homeserver-focused image"
+  IMAGE_REGISTRY: "ghcr.io/${{ github.repository_owner }}" # do not edit
+  ARTIFACTHUB_LOGO_URL: "https://avatars.githubusercontent.com/u/120078124?s=200&v=4" # You should put your own image here so that you get a fancy profile image on https://artifacthub.io/!
+  DEFAULT_TAG: "latest"
+  MAJOR_VERSION: "42"
+  UPSTREAM: "fedora-bootc:42"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref || github.run_id }}-${{ inputs.brand_name}}-${{ inputs.stream_name }}
+  cancel-in-progress: true
+
+jobs:
+  build_push:
+    name: Build and push image
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
+    steps:
+      # These stage versions are pinned by https://github.com/renovatebot/renovate
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+
+      - name: Build image with dagger
+        uses: dagger/dagger-for-github@8.0.0
+        with:
+          version: "latest"
+          cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
+          module: github.com/scottames/daggerverse/fedora@v0.0.6
+
+      - name: Chain in dagger shell
+        run: |
+          container \ |
+          from alpine \ |
+          file /etc/os-release \ |
+          contents
+        shell: dagger {0}
