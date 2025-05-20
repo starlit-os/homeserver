@@ -52,6 +52,6 @@ jobs:
         run: |
           container |
           from alpine |
-          file /etc/os-releas |
+          file /etc/os-release |
           contents
         shell: dagger {0}
