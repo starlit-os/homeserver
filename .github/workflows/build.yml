@@ -50,8 +50,8 @@ jobs:
 
       - name: Chain in dagger shell
         run: |
+          fedora --registry=quay.io --org=fedora --variant=fedora --suffix=bootc --tag 42@sha256:d3ee684f0e05edb711afbab4db82687fa6b8dcb7a86746ff99a48d053f7e3643 |
           container |
-          from alpine |
           file /etc/os-release |
           contents
         shell: dagger {0}
