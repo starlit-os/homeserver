@@ -51,6 +51,7 @@ jobs:
       - name: Chain in dagger shell
         run: |
           fedora --registry=quay.io --org=fedora --variant=fedora --suffix=bootc --tag 42 |
+          with-packages-installed --packages=audit,clevis-dracut,clevis-pin-tpm2,firewalld,gcc,pciutils,usbutils,wireguard-tools |
           container |
           file /etc/os-release |
           contents
