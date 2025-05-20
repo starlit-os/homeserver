@@ -55,3 +55,5 @@ jobs:
           file /etc/os-release |
           contents
         shell: dagger {0}
+        env:
+          DAGGER_CLOUD_TOKEN: ${{ secrets.DAGGER_CLOUD_TOKEN }}
