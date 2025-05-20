@@ -15,12 +15,12 @@
 package main
 
 import (
-	"context"
 	"dagger/homeserver/internal/dagger"
 )
 
 type Homeserver struct {
 	container *dagger.Container
+	fedora    *dagger.Fedora
 }
 
 func (m *Homeserver) WithPackages(weakDeps bool, packages ...string) *Homeserver {
@@ -102,28 +102,48 @@ func (m *Homeserver) WithIncus() *Homeserver {
 	/* TODO: Fix group IDs */
 }
 
-// Build container
-func (m *Homeserver) Build() *dagger.Container {
-	return m.BaseContainer("42", "d3ee684f0e05edb711afbab4db82687fa6b8dcb7a86746ff99a48d053f7e3643").
-		WithBasePackages().
-		WithRepoDisabled("fedora-cisco-openh264").
-		WithCockpit().
-		WithIncus().
-		// TODO: Add tailscale
-		// TODO: Add Universal Blue stuff
-		// TODO: Enable services
-		// TODO: Kernel stuff
-		// TODO: Cleanup
-		// TODO: bootc lint
-		container
+func (m *Homeserver) BaseContainer2(version string, digest string) *Homeserver {
+	options := dagger.FedoraOpts{
+		Registry: "quay.io",
+		Org:      "fedora",
+		Variant:  "fedora",
+		Suffix:   "bootc",
+		Tag:      version + "@sha256:" + digest,
+	}
+
+	m.fedora = dag.Fedora(options)
+
+	return m
 }
 
-// Build and publish container
-func (m *Homeserver) BuildAndPublish(ctx context.Context, directoryArg *dagger.Directory, pattern string) (string, error) {
-	return dag.Container().
-		From("alpine:latest").
-		WithMountedDirectory("/mnt", directoryArg).
-		WithWorkdir("/mnt").
-		WithExec([]string{"grep", "-R", pattern, "."}).
-		Stdout(ctx)
+func (m *Homeserver) WithBasePackages2() *Homeserver {
+	m.fedora = m.fedora.WithPackagesInstalled([]string{
+		"audit",
+		"clevis-dracut",
+		"clevis-pin-tpm2",
+		"firewalld",
+		"gcc",
+		"pciutils",
+		"usbutils",
+		"wireguard-tools"})
+	return m
+}
+
+// Build container
+func (m *Homeserver) Build() *dagger.Container {
+	return m.BaseContainer2("42", "d3ee684f0e05edb711afbab4db82687fa6b8dcb7a86746ff99a48d053f7e3643").
+		WithBasePackages2().
+		fedora.Container()
+
+	// return m.BaseContainer("42", "d3ee684f0e05edb711afbab4db82687fa6b8dcb7a86746ff99a48d053f7e3643").
+	// 	WithBasePackages().
+	// 	WithRepoDisabled("fedora-cisco-openh264").
+	// 	WithCockpit().
+	// 	WithIncus().
+	// 	// TODO: Add tailscale
+	// 	// TODO: Add Universal Blue stuff
+	// 	// TODO: Enable services
+	// 	// TODO: Kernel stuff
+	// 	// TODO: Cleanup
+	// 	// TODO: bootc lint
 }
