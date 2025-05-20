@@ -50,8 +50,8 @@ jobs:
 
       - name: Chain in dagger shell
         run: |
-          container \ |
-          from alpine \ |
-          file /etc/os-release \ |
+          container |
+          from alpine |
+          file /etc/os-releas |
           contents
         shell: dagger {0}
