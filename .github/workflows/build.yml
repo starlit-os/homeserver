@@ -48,9 +48,9 @@ jobs:
           cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
           module: github.com/scottames/daggerverse/fedora@v0.0.6
 
-      - name: Chain in dagger shell
+      - name: Build image
         run: |
-          fedora --registry=quay.io --org=fedora --variant=fedora --suffix=bootc --tag 42 |
+          fedora --registry=quay.io --org=fedora --variant=fedora --suffix=bootc --tag ${{ env.MAJOR_VERSION }} |
           with-packages-installed --packages=audit,clevis-dracut,clevis-pin-tpm2,firewalld,gcc,pciutils,usbutils,wireguard-tools |
           container |
           file /etc/os-release |
