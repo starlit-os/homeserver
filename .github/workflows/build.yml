@@ -46,17 +46,18 @@ jobs:
         with:
           version: "latest"
           cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
-          module: github.com/scottames/daggerverse/fedora@v0.0.6
 
       - name: Build image
         run: |
           fedora --registry=quay.io --org=fedora --variant=fedora --suffix=bootc --tag ${{ env.MAJOR_VERSION }} |
           with-repos-from-urls https://pkgs.tailscale.com/stable/fedora/tailscale.repo false |
           with-packages-installed audit clevis-dracut clevis-pin-tpm2 firewalld gcc pciutils usbutils wireguard-tools |
+          with-packages-installed cockpit cockpit-selinux |
           with-packages-installed tailscale |
+          with-packages-installed genisoimage incus incus-agent incus-client swtpm |
           container |
           file /etc/os-release |
           contents
-        shell: dagger {0}
+        shell: dagger {0} 
         env:
           DAGGER_CLOUD_TOKEN: ${{ secrets.DAGGER_CLOUD_TOKEN }}
