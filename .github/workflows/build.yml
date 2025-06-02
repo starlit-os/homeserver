@@ -51,7 +51,9 @@ jobs:
       - name: Build image
         run: |
           fedora --registry=quay.io --org=fedora --variant=fedora --suffix=bootc --tag ${{ env.MAJOR_VERSION }} |
+          with-repos-from-urls --urls https://pkgs.tailscale.com/stable/fedora/tailscale.repo |
           with-packages-installed audit clevis-dracut clevis-pin-tpm2 firewalld gcc pciutils usbutils wireguard-tools |
+          with-packages-installed tailscale |
           container |
           file /etc/os-release |
           contents
