@@ -55,8 +55,8 @@ jobs:
           with-packages-installed cockpit cockpit-selinux |
           with-packages-installed tailscale |
           with-packages-installed genisoimage incus incus-agent incus-client swtpm |
-          container ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }} |
-          publish ghcr.io/starlit-os/
+          container |
+          publish ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}
         shell: dagger {0} 
         env:
           DAGGER_CLOUD_TOKEN: ${{ secrets.DAGGER_CLOUD_TOKEN }}
